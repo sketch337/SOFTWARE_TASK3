@@ -51,7 +51,45 @@
             : current;
         }
 
-        // NEED TO START FROM HERE 
+        function appendNum(n) {
+            if (resetNext) {current = n; restNext =false; }
+            else current = current === '0' ? n : current + n;
+            updateDisplay();
+        }
+
+        function setOp(o) {
+            if (op && !resetNext) calculate();
+            prev = current;
+            op = o;
+            resetNext = true;
+            exprEl.textContent = prev + ' ' +op;
+        }
+
+        function Calculate() {
+            if (!op || resetNext) return;
+            let a = parseFloat(prev), b = parseFloat(current), r;
+            if      (op === '+') r = a + b;
+            else if (op === '−') r = a - b;
+            else if (op === '×') r = a * b;
+            else if (op === '÷') r = b !== 0 ? a / b : 'Error';
+            exprEl.textContent = prev + ' ' + op + ' ' + current + ' =';
+            current = r === 'Error' ? 'Error' : parseFloat(r.toPrecision(10)).toString();
+            op = null;
+            resetNext = true;
+            updateDisplay();
+        }
+
+        function clearAll() {
+            current = '0'; prev = ''; op = null; resetNext = false;
+            exprEl.textContent = ' '
+            updateDisplay();
+        }
+
+        function backspace() {
+            if (resetNext || current === 'Error') { current = '0'; resetNext = false; }
+            else current = current.length > 1 ? current.slice(0, -1) : '0';
+            updateDisplay();
+        }
     </script>
 </body>
 </html>
