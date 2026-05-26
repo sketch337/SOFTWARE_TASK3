@@ -7,6 +7,82 @@
     <style>
         *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
+        body {
+            min-height : 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: linear-gradient(135deg, #a8e6cf 0%, #ffd3a5 40%, #fd9853 70%, #ffb7c5 100%);
+            font-family: 'DM Mono', monospace;
+        }
+
+        .calc {
+            background : rgba(255, 255, 255, 0.35);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border-radius: 28px;
+            padding : 24px;
+            width: 200px;
+            border: 1px solid rgba(255, 255, 255, 0.5);
+        }
+
+        .display {
+            background: rgba(255, 255, 255, 0.7);
+            border-radius: 18px;
+            padding : 16px 20px;
+            text-align: right;
+            margin-bottom: 20px;
+            min-height: 70px;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-end;
+            align-items: flex-end;
+        }
+
+        .display .expr {
+            font-size: 13px;
+            color: rgba(0, 0, 0, 0.35);
+            min-height: 18px;
+            margin-bottom: 4px;
+        }
+
+        .display .main {
+            font-size: 36px;
+            font-weight: 500;
+            color: #1a1a1a;
+            word-break: break-all;
+            line-height: 1.1;
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 10px;
+        }
+
+        .btn {
+            border: none;
+            cursor: pointer;
+            border-radius: 14px;
+            font-family: 'DM Mono', monospace;
+            font-size: 18px;
+            font-weight: 500;
+            padding: 0;
+            height: 58px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: transform 0.1s, opacity 0.1s;
+            color: #1a1a1a;
+        }
+
+        .btn:active { transform: scale(0.93); opacity: 0.85; }
+        .btn-num  { background: rgba(255, 255, 255, 0.8); }
+        .btn-zero { grid-column: span 3; font-size: 20px; background: rgba(255, 255, 255, 0.8); }
+        .btn-op   { background: #e8417a; color: white; }
+        .btn-op:active { background: #c0336a; }
+        .btn-clear { background: rgba(255, 255, 255, 0.6); grid-column: span 2; }
+        .btn-back  { background: rgba(255, 255, 255, 0.6); }
     </style>
 </head>
 <body>
@@ -52,7 +128,7 @@
         }
 
         function appendNum(n) {
-            if (resetNext) {current = n; restNext =false; }
+            if (resetNext) {current = n; resetNext =false; }
             else current = current === '0' ? n : current + n;
             updateDisplay();
         }
@@ -69,8 +145,8 @@
             if (!op || resetNext) return;
             let a = parseFloat(prev), b = parseFloat(current), r;
             if      (op === '+') r = a + b;
-            else if (op === '−') r = a - b;
-            else if (op === '×') r = a * b;
+            else if (op === '-') r = a - b;
+            else if (op === 'x') r = a * b;
             else if (op === '÷') r = b !== 0 ? a / b : 'Error';
             exprEl.textContent = prev + ' ' + op + ' ' + current + ' =';
             current = r === 'Error' ? 'Error' : parseFloat(r.toPrecision(10)).toString();
