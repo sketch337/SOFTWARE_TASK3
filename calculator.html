@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Shreya's Calculator</title>
+    <style>
+        *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    </style>
+</head>
+<body>
+    <div class="calc" role="application" aria-label="Calculator">
+        <div class="display">
+            <div class="expr" id="expr"></div>
+            <div class="main" id="main">0</div>
+        </div>
+        <div class="grid">
+            <!--Following are all the buttons that will be appearing on the display-->
+            <button class="btn btn-clear" onclick="clearAll()">C</button>
+            <button class="btn btn-back" onclick="backspace()">←</button>
+            <button class="btn btn-op" onclick="setOp('÷')">÷</button>
+
+            <button class="btn btn-num" onclick="appendNum('7')">7</button>
+            <button class="btn btn-num" onclick="appendNum('8')">8</button>
+            <button class="btn btn-num" onclick="appendNum('9')">9</button>
+            <button class="btn btn-op" onclick="setOp('x')">x</button>
+
+            <button class="btn btn-num" onclick="appendNum('4')">4</button>
+            <button class="btn btn-num" onclick="appendNum('5')">5</button>
+            <button class="btn btn-num" onclick="appendNum('6')">6</button>
+            <button class="btn btn-op" onclick="setOp('-')">-</button>
+
+            <button class="btn btn-num" onclick="appendNum('1')">1</button>
+            <button class="btn btn-num" onclick="appendNum('2')">2</button>
+            <button class="btn btn-num" onclick="appendNum('3')">3</button>
+            <button class="btn btn-op" onclick="setOp('+')">+</button>
+
+            <button class="btn btn-zero" onclick="appendNum('0')">0</button>
+            <button class="btn btn-op" onclick="calculate()">=</button>
+        </div>
+    </div>
+    <script>
+        let current = '0', prev = '', op = null, resetNext = false;
+        const mainEl = document.getElementById('main');
+        const exprEl = document.getElementById('expr');
+
+        function updateDisplay() {
+            mainEl.textContent= current.length > 10
+            ? parseFloat(parseFloat(current).toPrecision(8)).toString()
+            : current;
+        }
+
+        // NEED TO START FROM HERE 
+    </script>
+</body>
+</html>
