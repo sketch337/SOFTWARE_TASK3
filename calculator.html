@@ -4,6 +4,7 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Shreya's Calculator</title>
+    <!--The css was just written in the same file and below is the code for it -->
     <style>
         *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
@@ -12,7 +13,7 @@
             display: flex;
             justify-content: center;
             align-items: center;
-            background: linear-gradient(135deg, #a8e6cf 0%, #ffd3a5 40%, #fd9853 70%, #ffb7c5 100%);
+            background: linear-gradient(135deg, #0B1D3A 0%, #1D4E6B 40%, #478F76 70%, #A3D2A9 100%);
             font-family: 'DM Mono', monospace;
         }
 
@@ -22,7 +23,7 @@
             -webkit-backdrop-filter: blur(12px);
             border-radius: 28px;
             padding : 24px;
-            width: 200px;
+            width: 300px;
             border: 1px solid rgba(255, 255, 255, 0.5);
         }
 
@@ -69,6 +70,7 @@
             font-weight: 500;
             padding: 0;
             height: 58px;
+            width: 100%;
             display: flex;
             align-items: center;
             justify-content: center;
@@ -116,19 +118,20 @@
             <button class="btn btn-op" onclick="calculate()">=</button>
         </div>
     </div>
+    <!--The javascript was just written in the same file and below is the code for it -->
     <script>
         let current = '0', prev = '', op = null, resetNext = false;
         const mainEl = document.getElementById('main');
         const exprEl = document.getElementById('expr');
 
         function updateDisplay() {
-            mainEl.textContent= current.length > 10
-            ? parseFloat(parseFloat(current).toPrecision(8)).toString()
-            : current;
+            mainEl.textContent = current.length > 10
+                ? parseFloat(parseFloat(current).toPrecision(8)).toString()
+                : current;
         }
 
         function appendNum(n) {
-            if (resetNext) {current = n; resetNext =false; }
+            if (resetNext) { current = n; resetNext = false; }
             else current = current === '0' ? n : current + n;
             updateDisplay();
         }
@@ -138,10 +141,10 @@
             prev = current;
             op = o;
             resetNext = true;
-            exprEl.textContent = prev + ' ' +op;
+            exprEl.textContent = prev + ' ' + op;
         }
 
-        function Calculate() {
+        function calculate() {
             if (!op || resetNext) return;
             let a = parseFloat(prev), b = parseFloat(current), r;
             if      (op === '+') r = a + b;
@@ -157,7 +160,7 @@
 
         function clearAll() {
             current = '0'; prev = ''; op = null; resetNext = false;
-            exprEl.textContent = ' '
+            exprEl.textContent = '';
             updateDisplay();
         }
 
