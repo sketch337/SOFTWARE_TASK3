@@ -4,25 +4,50 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Shreya's Calculator</title>
-    <!--The css was just written in the same file and below is the code for it -->
+
     <style>
         *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
         body {
-            min-height : 100vh;
+            min-height: 100vh;
             display: flex;
             justify-content: center;
             align-items: center;
             background: linear-gradient(135deg, #0B1D3A 0%, #1D4E6B 40%, #478F76 70%, #A3D2A9 100%);
             font-family: 'DM Mono', monospace;
+            padding: 40px;
         }
 
+        /* NEW: wrapper for left + right layout */
+        .page-layout {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            width: 90%;
+            max-width: 1200px;
+        }
+
+        /* LEFT SIDE TEXT */
+        .math-info {
+            color: white;
+            max-width: 350px;
+            line-height: 1.6;
+            font-size: 18px;
+        }
+
+        .math-info h2 {
+            margin-top: 20px;
+            margin-bottom: 12px;
+            font-size: 26px;
+        }
+
+        /* CALCULATOR */
         .calc {
-            background : rgba(255, 255, 255, 0.35);
+            background: rgba(255, 255, 255, 0.35);
             backdrop-filter: blur(12px);
             -webkit-backdrop-filter: blur(12px);
             border-radius: 28px;
-            padding : 24px;
+            padding: 24px;
             width: 300px;
             border: 1px solid rgba(255, 255, 255, 0.5);
         }
@@ -30,7 +55,7 @@
         .display {
             background: rgba(255, 255, 255, 0.7);
             border-radius: 18px;
-            padding : 16px 20px;
+            padding: 16px 20px;
             text-align: right;
             margin-bottom: 20px;
             min-height: 70px;
@@ -68,14 +93,18 @@
             font-family: 'DM Mono', monospace;
             font-size: 18px;
             font-weight: 500;
-            padding: 0;
             height: 58px;
             width: 100%;
             display: flex;
             align-items: center;
             justify-content: center;
-            transition: transform 0.1s, opacity 0.1s;
+            transition: transform 0.1s, opacity 0.1s, background-color 0.2s;
             color: #1a1a1a;
+        }
+
+        .btn:hover {
+            background-color: #64748B;
+            color: white;
         }
 
         .btn:active { transform: scale(0.93); opacity: 0.85; }
@@ -87,38 +116,64 @@
         .btn-back  { background: rgba(255, 255, 255, 0.6); }
     </style>
 </head>
+
 <body>
-    <div class="calc" role="application" aria-label="Calculator">
-        <div class="display">
-            <div class="expr" id="expr"></div>
-            <div class="main" id="main">0</div>
+
+    <div class="page-layout">
+
+        <!-- LEFT SIDE MATHS INFO -->
+        <div class="math-info">
+            <h2>Maths Essentials</h2>
+            <p><strong>BODMAS:</strong> Brackets, Orders, Division, Multiplication, Addition, Subtraction</p>
+            <p><strong>Pythagoras:</strong> a² + b² = c²</p>
+            <p><strong>Common Fractions:</strong> 1/2 = 0.5, 1/4 = 0.25, 3/4 = 0.75</p>
+            <p><strong>Prime Numbers:</strong> 2, 3, 5, 7, 11</p>
+
+            <h2>Geometry</h2>
+            <p><strong>Area of Circle:</strong> A = πr²</p>
+            <p><strong>Circumference:</strong> C = 2πr</p>
+            <p><strong>Area of Triangle:</strong> A = ½ * b * h</p>
+
+            <h2>Algebra Basics</h2>
+            <p><strong>Expand:</strong> a(b + c) = ab + ac</p>
+            <p><strong>Factor:</strong> ab + ac = a(b + c)</p>
+            <p><strong>Quadratic Formula:</strong> x = (-b ± √(b² - 4ac)) / (2a)</p>
         </div>
-        <div class="grid">
-            <!--Following are all the buttons that will be appearing on the display-->
-            <button class="btn btn-clear" onclick="clearAll()">C</button>
-            <button class="btn btn-back" onclick="backspace()">←</button>
-            <button class="btn btn-op" onclick="setOp('÷')">÷</button>
 
-            <button class="btn btn-num" onclick="appendNum('7')">7</button>
-            <button class="btn btn-num" onclick="appendNum('8')">8</button>
-            <button class="btn btn-num" onclick="appendNum('9')">9</button>
-            <button class="btn btn-op" onclick="setOp('x')">x</button>
+        <!-- RIGHT SIDE CALCULATOR -->
+        <div class="calc" role="application" aria-label="Calculator">
+            <div class="display">
+                <div class="expr" id="expr"></div>
+                <div class="main" id="main">0</div>
+            </div>
 
-            <button class="btn btn-num" onclick="appendNum('4')">4</button>
-            <button class="btn btn-num" onclick="appendNum('5')">5</button>
-            <button class="btn btn-num" onclick="appendNum('6')">6</button>
-            <button class="btn btn-op" onclick="setOp('-')">-</button>
+            <div class="grid">
+                <button class="btn btn-clear" onclick="clearAll()">C</button>
+                <button class="btn btn-back" onclick="backspace()">←</button>
+                <button class="btn btn-op" onclick="setOp('÷')">÷</button>
 
-            <button class="btn btn-num" onclick="appendNum('1')">1</button>
-            <button class="btn btn-num" onclick="appendNum('2')">2</button>
-            <button class="btn btn-num" onclick="appendNum('3')">3</button>
-            <button class="btn btn-op" onclick="setOp('+')">+</button>
+                <button class="btn btn-num" onclick="appendNum('7')">7</button>
+                <button class="btn btn-num" onclick="appendNum('8')">8</button>
+                <button class="btn btn-num" onclick="appendNum('9')">9</button>
+                <button class="btn btn-op" onclick="setOp('x')">x</button>
 
-            <button class="btn btn-zero" onclick="appendNum('0')">0</button>
-            <button class="btn btn-op" onclick="calculate()">=</button>
+                <button class="btn btn-num" onclick="appendNum('4')">4</button>
+                <button class="btn btn-num" onclick="appendNum('5')">5</button>
+                <button class="btn btn-num" onclick="appendNum('6')">6</button>
+                <button class="btn btn-op" onclick="setOp('-')">-</button>
+
+                <button class="btn btn-num" onclick="appendNum('1')">1</button>
+                <button class="btn btn-num" onclick="appendNum('2')">2</button>
+                <button class="btn btn-num" onclick="appendNum('3')">3</button>
+                <button class="btn btn-op" onclick="setOp('+')">+</button>
+
+                <button class="btn btn-zero" onclick="appendNum('0')">0</button>
+                <button class="btn btn-op" onclick="calculate()">=</button>
+            </div>
         </div>
+
     </div>
-    <!--The javascript was just written in the same file and below is the code for it -->
+
     <script>
         let current = '0', prev = '', op = null, resetNext = false;
         const mainEl = document.getElementById('main');
@@ -169,6 +224,38 @@
             else current = current.length > 1 ? current.slice(0, -1) : '0';
             updateDisplay();
         }
+
+        document.addEventListener("keydown", function(e) {
+            const key = e.key;
+
+            // Numbers 0–9
+            if (!isNaN(key)) {
+                appendNum(key);
+            }
+
+            // Operators
+            if (key === "+") setOp("+");
+            if (key === "-") setOp("-");
+            if (key === "*") setOp("x");   // shift+8
+            if (key === "/") setOp("÷");
+
+            // Enter or = → calculate
+            if (key === "Enter" || key === "=") {
+                calculate();
+            }
+
+            // Backspace
+            if (key === "Backspace") {
+                backspace();
+            }
+
+            // Escape → Clear
+            if (key === "Escape") {
+                clearAll();
+            }
+        });
+
     </script>
+
 </body>
 </html>
